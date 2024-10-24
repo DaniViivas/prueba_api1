@@ -11,29 +11,33 @@ class PersonaController {
         $this->persona = new Persona($db);
     }
 
-    // Obtener todas las personas
-    public function obtenerPersonas() {
-        $stmt = $this->persona->leerPersonas();
-        $personas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($personas);
-    }
 
-    // Obtener una persona por ID
-    public function obtenerPersona($id) {
-        $stmt = $this->persona->obtenerPersona($id);
+
+     // Obtener una persona por ID
+     public function obtener($id) {
+        $stmt = $this->persona->obtener($id);
         $persona = $stmt->fetch(PDO::FETCH_ASSOC);
         echo json_encode($persona);
     }
 
+
+    // Obtener todas las personas
+    public function leer() {
+        $stmt = $this->persona->leer();
+        $personas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($personas);
+    }
+
+   
     // Crear nueva persona
-    public function crearPersona($data) {
+    public function crear($data) {
         $this->persona->nombre = $data->nombre;
         $this->persona->apellido = $data->apellido;
         $this->persona->fecha_nacimiento = $data->fecha_nacimiento;
         $this->persona->telefono = $data->telefono;
         $this->persona->direccion = $data->direccion;
 
-        if ($this->persona->crearPersona()) {
+        if ($this->persona->crear()) {
             echo json_encode(["mensaje" => "Persona creada exitosamente."]);
         } else {
             echo json_encode(["mensaje" => "Error al crear la persona."]);
@@ -41,7 +45,7 @@ class PersonaController {
     }
 
     // Actualizar persona
-    public function actualizarPersona($data) {
+    public function actualizar($data) {
         $this->persona->id_persona_pk = $data->id_persona_pk;
         $this->persona->nombre = $data->nombre;
         $this->persona->apellido = $data->apellido;
@@ -49,7 +53,7 @@ class PersonaController {
         $this->persona->telefono = $data->telefono;
         $this->persona->direccion = $data->direccion;
 
-        if ($this->persona->actualizarPersona()) {
+        if ($this->persona->actualizar()) {
             echo json_encode(["mensaje" => "Persona actualizada exitosamente."]);
         } else {
             echo json_encode(["mensaje" => "Error al actualizar la persona."]);
@@ -57,8 +61,8 @@ class PersonaController {
     }
 
     // Eliminar persona
-    public function eliminarPersona($id) {
-        if ($this->persona->eliminarPersona($id)) {
+    public function eliminar($id) {
+        if ($this->persona->eliminar($id)) {
             echo json_encode(["mensaje" => "Persona eliminada exitosamente."]);
         } else {
             echo json_encode(["mensaje" => "Error al eliminar la persona."]);

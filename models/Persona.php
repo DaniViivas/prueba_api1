@@ -14,7 +14,7 @@ class Persona {
     }
 
     // Leer todas las personas
-    public function leerPersonas() {
+    public function leer() {
         $query = "CALL sp_leer_persona()";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -22,7 +22,7 @@ class Persona {
     }
 
     // Obtener una persona por ID
-    public function obtenerPersona($id) {
+    public function obtener($id) {
         $query = "CALL sp_obtener_persona(:p_id_persona_pk)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':p_id_persona_pk', $id);
@@ -31,10 +31,9 @@ class Persona {
     }
 
     // Crear una nueva persona
-    public function crearPersona() {
+    public function crear() {
         $query = "CALL sp_crear_persona(:p_nombre, :p_apellido, :p_fecha_nacimiento, :p_telefono, :p_direccion)";
         $stmt = $this->conn->prepare($query);
-
         $stmt->bindParam(':p_nombre', $this->nombre);
         $stmt->bindParam(':p_apellido', $this->apellido);
         $stmt->bindParam(':p_fecha_nacimiento', $this->fecha_nacimiento);
@@ -48,7 +47,7 @@ class Persona {
     }
 
     // Actualizar una persona
-    public function actualizarPersona() {
+    public function actualizar() {
         $query = "CALL sp_actualizar_persona(:p_id_persona_pk, :p_nombre, :p_apellido, :p_fecha_nacimiento, :p_telefono, :p_direccion)";
         $stmt = $this->conn->prepare($query);
 
@@ -66,7 +65,7 @@ class Persona {
     }
 
     // Eliminar una persona
-    public function eliminarPersona($id) {
+    public function eliminar($id) {
         $query = "CALL sp_eliminar_persona(:p_id_persona_pk)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':p_id_persona_pk', $id);
